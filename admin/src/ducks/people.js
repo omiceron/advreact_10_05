@@ -15,6 +15,10 @@ export const ADD_PERSON = `${prefix}/ADD_PERSON`
 export const ADD_PERSON_START = `${prefix}/ADD_PERSON_START`
 export const ADD_PERSON_SUCCESS = `${prefix}/ADD_PERSON_SUCCESS`
 
+export const DELETE_PERSON = `${prefix}/DELETE_PERSON`
+export const DELETE_PERSON_START = `${prefix}/DELETE_PERSON_START`
+export const DELETE_PERSON_SUCCESS = `${prefix}/DELETE_PERSON_SUCCESS`
+
 export const FETCH_ALL_REQUEST = `${prefix}/FETCH_ALL_REQUEST`
 export const FETCH_ALL_SUCCESS = `${prefix}/FETCH_ALL_SUCCESS`
 
@@ -92,6 +96,13 @@ export function addEventToPerson(eventUid, personUid) {
   }
 }
 
+export function deletePerson(personUid) {
+  return {
+    type: DELETE_PERSON,
+    payload: { personUid }
+  }
+}
+
 /**
  * Sagas
  */
@@ -114,6 +125,20 @@ export function* addPersonSaga(action) {
   yield put(reset('person'))
 }
 
+export function* deletePersonSaga({ payload: { personUid } }) {
+  yield put({
+    type: DELETE_PERSON_START
+  })
+
+  const peopleRef = firebase.database().ref('people/' + personUid)
+
+  yield peopleRef.remove()
+
+  yield put({
+    type: DELETE_PERSON_SUCCESS
+  })
+}
+
 export function* fetchAllSaga() {
   const peopleRef = firebase.database().ref('people')
 
@@ -128,6 +153,7 @@ export function* fetchAllSaga() {
 export const saga = function*() {
   yield all([
     takeEvery(ADD_PERSON, addPersonSaga),
-    takeEvery(FETCH_ALL_REQUEST, fetchAllSaga)
+    takeEvery(FETCH_ALL_REQUEST, fetchAllSaga),
+    takeEvery(DELETE_PERSON, deletePersonSaga)
   ])
 }

@@ -26,8 +26,7 @@ const spec = {
   beginDrag(props) {
     return {
       uid: props.person.uid,
-      DragPreview,
-      type: 'person'
+      DragPreview
     }
   }
 }

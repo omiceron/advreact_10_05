@@ -40,8 +40,7 @@ const collect = (connect, monitor) => ({
 const specSource = {
   beginDrag(props) {
     return {
-      uid: props.event.uid,
-      type: 'event'
+      uid: props.event.uid
     }
   }
 }

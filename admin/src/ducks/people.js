@@ -150,6 +150,10 @@ export function* fetchAllSaga() {
   })
 }
 
+export function* addEventToPersonSaga({ payload: { eventUid, personUid } }) {
+  const peopleRef = firebase.database().ref('people/' + personUid)
+}
+
 export const saga = function*() {
   yield all([
     takeEvery(ADD_PERSON, addPersonSaga),

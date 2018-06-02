@@ -195,9 +195,9 @@ export function* deleteEventSaga({ payload: { uid } }) {
     type: DELETE_EVENT_START
   })
 
-  const peopleRef = firebase.database().ref('events/' + uid)
+  const eventRef = firebase.database().ref('events/' + uid)
 
-  yield peopleRef.remove()
+  yield eventRef.remove()
 
   yield put({
     type: DELETE_EVENT_SUCCESS

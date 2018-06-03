@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { DropTarget, DragSource } from 'react-dnd'
 import { connect } from 'react-redux'
-import { addEventToPerson } from '../../ducks/people'
+import { addEventToPerson, peopleSelector } from '../../ducks/people'
 
 class SelectedEventCard extends Component {
   static propTypes = {}
@@ -50,7 +50,13 @@ const collectSource = (connect, monitor) => ({
 })
 
 export default connect(
-  null,
+  (state, props) => {
+    return {
+      people: peopleSelector(state).filter((person) =>
+        person.events.includes(props.event.uid)
+      )
+    }
+  },
   { addEventToPerson }
 )(
   DropTarget(['person'], spec, collect)(

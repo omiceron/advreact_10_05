@@ -1,21 +1,21 @@
 import React, {Component} from 'react'
 import {Text, StyleSheet, SectionList} from 'react-native'
-import EventCard from './event-card'
+import PersonCard from './person-card'
 import groupBy from 'lodash/groupBy'
 
-class EventList extends Component {
-  static propTypes = {};
+class PeopleList extends Component {
+  static propTypes = { };
 
   render() {
-    const grouped = groupBy(this.props.events, event => event.title.charAt(0))
+    const grouped = groupBy(this.props.people, person => person.email.charAt(0))
     const sections = Object.entries(grouped).map(([letter, list]) => ({
-      title: `${letter}, ${list.length} events`,
-      data: list.map(event => ({key: event.uid, event}))
+      email: `${letter}, ${list.length} people`,
+      data: list.map(person => ({key: person.uid, person}))
     }))
     return <SectionList
       sections={sections}
-      renderSectionHeader={({section}) => <Text style={styles.header}>{section.title}</Text>}
-      renderItem={({item}) => <EventCard event={item.event} key={item.key}/>}
+      renderSectionHeader={({section}) => <Text style={styles.header}>{section.email}</Text>}
+      renderItem={({item}) => <PersonCard person={item.person} key={item.key}/>}
     />
   }
 }
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default EventList
+export default PeopleList

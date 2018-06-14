@@ -21,7 +21,6 @@ export default class UserStore {
         firebase.auth().signInWithEmailAndPassword(this.email, this.password)
             .then(user => {
                 this.user = user
-                console.log('---', 123)
                 this.navigationStore.navigate('eventList')
             })
             .catch(error => console.error(error))

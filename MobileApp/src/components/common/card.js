@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, StyleSheet} from 'react-native'
+import {View, StyleSheet, TouchableOpacity} from 'react-native'
 
 class Card extends Component {
     static propTypes = {
@@ -8,9 +8,9 @@ class Card extends Component {
 
     render() {
         return (
-            <View style = {styles.container}>
+            <TouchableOpacity onPress = {this.props.onPress}>
                 {this.props.children}
-            </View>
+            </TouchableOpacity>
         )
     }
 }
